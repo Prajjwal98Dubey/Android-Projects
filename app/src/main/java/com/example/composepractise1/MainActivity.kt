@@ -74,6 +74,7 @@ fun UnitConverter(){
         Spacer(modifier = Modifier.height(20.dp))
         OutlinedTextField(value = inputValue, onValueChange = {
             inputValue = it
+            res = findResult(inputSelect,outputSelect,it)
         }, label = { Text("Enter Value") })
         Row(modifier = Modifier.padding(5.dp)){
             Box {
@@ -156,6 +157,7 @@ fun UnitConverter(){
 
 }
 fun findResult(inp:String,out:String,numValue:String) : String{
+    if(numValue.length == 0) return ""
     var ans = numValue.toDouble()
     if (inp == "centimeter"){
         if (out == "meter"){
