@@ -59,7 +59,6 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-
 @Composable
 fun UnitConverter(){
     var inputValue by remember { mutableStateOf("1") }
@@ -68,6 +67,8 @@ fun UnitConverter(){
     var res by remember {  mutableStateOf("100") }
     var isInputExpanded by remember { mutableStateOf(false) }
     var isOutExpanded by remember { mutableStateOf(false) }
+    var inputIndicator by remember { mutableStateOf("m") }
+    var outputIndicator by remember { mutableStateOf("cm") }
     Column(modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
         Text(text = "Unit Converter", fontSize = 30.sp, fontWeight = FontWeight.Bold)
         Spacer(modifier = Modifier.height(20.dp))
@@ -82,6 +83,7 @@ fun UnitConverter(){
                     isInputExpanded = true
                 }){
                     Text("Input")
+                    Text("($inputIndicator)")
                     Icon(Icons.Default.ArrowDropDown,"Drop Down Icon")
                     DropdownMenu(expanded = isInputExpanded, onDismissRequest = {
                         isInputExpanded = false
@@ -89,16 +91,19 @@ fun UnitConverter(){
                         DropdownMenuItem(text = { Text("centimeter") }, onClick = {
                             inputSelect = "centimeter"
                             isInputExpanded = false
+                            inputIndicator = "cm"
                             res = findResult("centimeter",outputSelect,inputValue)
                         })
                         DropdownMenuItem(text = { Text("meter") }, onClick = {
                             inputSelect  = "meter"
                             isInputExpanded = false
+                            inputIndicator = "m"
                             res = findResult("meter",outputSelect,inputValue)
                         })
                         DropdownMenuItem(text = { Text("kilometer") }, onClick = {
                             inputSelect = "kilometer"
                             isInputExpanded = false
+                            inputIndicator = "km"
                             res = findResult("kilometer",outputSelect,inputValue)
                         })
 
@@ -112,7 +117,9 @@ fun UnitConverter(){
                     .height(45.dp), onClick = {
                     isOutExpanded = true
                 }){
+
                     Text("Output")
+                    Text("($outputIndicator)")
                     Icon(Icons.Default.ArrowDropDown,"Drop Down Icon")
                     DropdownMenu(expanded = isOutExpanded, onDismissRequest = {
                         isOutExpanded = false
@@ -120,16 +127,19 @@ fun UnitConverter(){
                         DropdownMenuItem(text = { Text("centimeter") }, onClick = {
                             outputSelect = "centimeter"
                             isOutExpanded = false
+                            outputIndicator = "cm"
                             res = findResult(inputSelect,"centimeter",inputValue)
                         })
                         DropdownMenuItem(text = { Text("meter") }, onClick = {
                             outputSelect = "meter"
                             isOutExpanded  = false
+                            outputIndicator = "m"
                             res = findResult(inputSelect,"meter",inputValue)
                         })
                         DropdownMenuItem(text = { Text("kilometer") }, onClick = {
                             outputSelect = "kilometer"
                             isOutExpanded = false
+                            outputIndicator = "km"
                             res = findResult(inputSelect,"kilometer",inputValue)
                         })
 
@@ -139,7 +149,7 @@ fun UnitConverter(){
         }
         Spacer(modifier = Modifier.height(20.dp))
         Row(horizontalArrangement = Arrangement.Center) {
-            Text("Result: ${res}", fontWeight = FontWeight.ExtraBold, fontSize = 16.sp,)
+            Text("Result: $res $outputIndicator", fontWeight = FontWeight.ExtraBold, fontSize = 16.sp,)
         }
 
     }
